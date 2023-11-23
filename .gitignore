@@ -1,24 +1,88 @@
-# Compiled class file
-*.class
+// Класс узла списка
+class ListNode<T> {
+    T data;
+    ListNode<T> next;
 
-# Log file
-*.log
+    public ListNode(T data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
-# BlueJ files
-*.ctxt
+// Класс реализации односвязного списка
+class LinkedList<T> {
+    private ListNode<T> head;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    // Конструктор
+    public LinkedList() {
+        this.head = null;
+    }
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+    // Метод для добавления элемента в конец списка
+    public void append(T data) {
+        ListNode<T> newNode = new ListNode<>(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            ListNode<T> current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+    // Метод для удаления элемента из списка
+    public void delete(T data) {
+        if (head == null) {
+            return;
+        }
+
+        if (head.data.equals(data)) {
+            head = head.next;
+            return;
+        }
+
+        ListNode<T> current = head;
+        while (current.next != null && !current.next.data.equals(data)) {
+            current = current.next;
+        }
+
+        if (current.next != null) {
+            current.next = current.next.next;
+        }
+    }
+
+    // Метод для отображения содержимого списка
+    public void display() {
+        ListNode<T> current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+
+// Пример использования односвязного списка
+public class Main {
+    public static void main(String[] args) {
+        LinkedList<Integer> linkedList = new LinkedList<>();
+
+        // Добавление элементов в список
+        linkedList.append(1);
+        linkedList.append(2);
+        linkedList.append(3);
+
+        // Отображение содержимого списка
+        System.out.print("Linked List: ");
+        linkedList.display();
+
+        // Удаление элемента из списка
+        linkedList.delete(2);
+
+        // Отображение содержимого списка после удаления
+        System.out.print("Linked List after deletion: ");
+        linkedList.display();
+    }
+}
